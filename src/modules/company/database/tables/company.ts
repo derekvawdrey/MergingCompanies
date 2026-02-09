@@ -17,11 +17,11 @@ export interface CompanyTable {
     // It would make sense to have multiple addresses for a company, but I think it would be overkill for this project.
     address_line_1: string;
     address_line_2: string;
-    address_state: string;
-    address_city: string;
+    state: string;
+    city: string;
 
     // This should also work with postal codes like: "12345-6789" so I didn't choose a number.
-    address_postal_code: string;
+    postal_code: string;
 }
 
 export type Company = Selectable<CompanyTable>
