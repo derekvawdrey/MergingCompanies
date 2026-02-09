@@ -9,6 +9,13 @@ export async function up(db: Kysely<any>): Promise<void> {
     )
     .addColumn('name', 'varchar', (col) => col.notNull())
     .execute()
+
+  // Because we will be looking for branches and users connected to companies, we should index them
+  await db.schema
+    .createIndex('branch_company_id_index')
+    .on('branch')
+    .column('company_id')
+    .execute()
 }
 
 export async function down(db: Kysely<any>): Promise<void> {

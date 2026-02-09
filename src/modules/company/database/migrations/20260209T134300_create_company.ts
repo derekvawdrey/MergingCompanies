@@ -13,6 +13,8 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('state', 'varchar', (col) => col.notNull())
     .addColumn('postal_code', 'varchar', (col) => col.notNull())
     .execute()
+
+    
 }
 
 export async function down(db: Kysely<any>): Promise<void> {

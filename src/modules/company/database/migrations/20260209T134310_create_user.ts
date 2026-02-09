@@ -10,6 +10,13 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('first_name', 'varchar', (col) => col.notNull())
     .addColumn('last_name', 'varchar', (col) => col.notNull())
     .execute()
+
+  
+  await db.schema
+    .createIndex('user_company_id_index')
+    .on('user')
+    .column('company_id')
+    .execute()
 }
 
 export async function down(db: Kysely<any>): Promise<void> {
