@@ -1,0 +1,29 @@
+import {
+    Generated,
+    Insertable,
+    Selectable,
+    Updateable,
+} from 'kysely'
+
+/**
+ * User table represents a user of the system.
+ * These are people who have logged in through the FamilySearch API.
+ */
+export interface CompanyTable {
+    id: Generated<string>;
+    name: string;
+
+    // I decided not to make the address a completely new table and have it attached to a company.
+    // It would make sense to have multiple addresses for a company, but I think it would be overkill for this project.
+    address_line_1: string;
+    address_line_2: string;
+    address_state: string;
+    address_city: string;
+
+    // This should also work with postal codes like: "12345-6789" so I didn't choose a number.
+    address_postal_code: string;
+}
+
+export type Company = Selectable<CompanyTable>
+export type NewCompany = Insertable<CompanyTable>
+export type CompanyUpdate = Updateable<CompanyTable>
