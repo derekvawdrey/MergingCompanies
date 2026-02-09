@@ -9,3 +9,15 @@ The scenario is you have two companies in a database (one is a duplicate of the 
 - How would you architect the HTTP interface for that?
 - How many endpoints?
 - Message Structures?
+
+## Running the project
+Running the project can be done in two ways, either through Docker, or manually setting up the project. Docker is the easiest of the two and should ensure that the project works in any environment.
+
+### Docker
+We will be running this project in development mode for the sake of ease and brevity. **You must have Docker installed** on your local environment to run this!
+
+1. Run `npm run docker:dev:up` to start all necessary services
+
+### Manually
+If you do not wish to use the Docker that I have created, you may run this project manually following the steps below:
+1. Run `npm install` to install all necessary dependencies to the root project
