@@ -33,13 +33,13 @@ export class BranchRepository implements IBranchRepository {
         return result;
     }
 
-    async update(id: string, data: BranchUpdate): Promise<Branch | undefined> {
+    async update(id: string, data: BranchUpdate): Promise<Branch[] | undefined> {
         return this.db
             .updateTable("branch")
             .set(data)
             .where("id", "=", id)
             .returningAll()
-            .executeTakeFirst();
+            .execute();
     }
 
     async delete(id: string): Promise<boolean> {

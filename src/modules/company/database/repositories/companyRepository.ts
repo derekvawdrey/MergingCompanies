@@ -27,13 +27,13 @@ export class CompanyRepository implements ICompanyRepository {
         return result;
     }
 
-    async update(id: string, data: CompanyUpdate): Promise<Company | undefined> {
+    async update(id: string, data: CompanyUpdate): Promise<Company[] | undefined> {
         return this.db
             .updateTable("company")
             .set(data)
             .where("id", "=", id)
             .returningAll()
-            .executeTakeFirst();
+            .execute();
     }
 
     async delete(id: string): Promise<boolean> {

@@ -31,13 +31,13 @@ export class UserRepository implements IUserRepository {
         return result;
     }
 
-    async update(id: string, data: UserUpdate): Promise<User | undefined> {
+    async update(id: string, data: UserUpdate): Promise<User[] | undefined> {
         return this.db
             .updateTable("user")
             .set(data)
             .where("id", "=", id)
             .returningAll()
-            .executeTakeFirst();
+            .execute();
     }
 
     async delete(id: string): Promise<boolean> {
