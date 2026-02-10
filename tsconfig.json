@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
     "strict": true,
     "allowUnusedLabels": false,
     "allowUnreachableCode": false,
@@ -14,8 +16,10 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
+  "include": ["src/**/*"],
   "$schema": "https://www.schemastore.org/tsconfig",
   "display": "Strictest",
   "_version": "2.0.0"

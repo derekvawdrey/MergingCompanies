@@ -2,7 +2,9 @@ import { Kysely } from "kysely";
 import { Database } from "../../../../config/database/database.types";
 import { IUserRepository } from "./interfaces";
 import { User, UserUpdate, NewUser } from "../schema/user";
+import { injectable } from "inversify";
 
+@injectable()
 export class UserRepository implements IUserRepository {
     constructor(private readonly db: Kysely<Database>) {}
 

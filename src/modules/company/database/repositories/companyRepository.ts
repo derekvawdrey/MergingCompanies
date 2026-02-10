@@ -2,7 +2,9 @@ import { Kysely } from "kysely";
 import { Database } from "../../../../config/database/database.types";
 import { ICompanyRepository } from "./interfaces";
 import { Company, CompanyUpdate, NewCompany } from "../schema/company";
+import { injectable } from "inversify";
 
+@injectable()
 export class CompanyRepository implements ICompanyRepository {
     constructor(private readonly db: Kysely<Database>) {}
 

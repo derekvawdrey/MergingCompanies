@@ -7,7 +7,7 @@ import { companyContainersModule } from "../../modules/company/di/container.modu
 
 const container = new Container();
 
-container.load(
+container.loadSync(
     companyContainersModule,
     mergeContainersModule
 );

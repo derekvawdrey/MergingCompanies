@@ -2,7 +2,9 @@ import { Kysely } from "kysely";
 import { Database } from "../../../../config/database/database.types";
 import { IBranchRepository } from "./interfaces";
 import { Branch, BranchUpdate, NewBranch } from "../schema/branch";
+import { injectable } from "inversify";
 
+@injectable()
 export class BranchRepository implements IBranchRepository {
     constructor(private readonly db: Kysely<Database>) {}
 

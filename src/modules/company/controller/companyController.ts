@@ -8,12 +8,12 @@ export class CompanyController extends BaseController implements ICompanyControl
         super();
     }
 
-    getCompany = this.handleAsync(async (req, res) => {
+    getCompany = this.handleAsync(async (_req, res) => {
         res.json({});
     });
 
 
-    getCompanies = this.handleAsync(async (req, res) => {
+    getCompanies = this.handleAsync(async (_req, res) => {
         res.json({});
     });
 

@@ -1,7 +1,6 @@
 import { inject, injectable } from "inversify";
 import { IMergeService } from "../services/interfaces";
 import { TYPES } from "../../../config/di/types";
-import { NextFunction } from "express";
 import { IMergeController } from "./interfaces";
 import { BaseController } from "../../../common";
 
@@ -13,11 +12,12 @@ export class MergeController extends BaseController implements IMergeController 
         super();
     }
 
-    mergeConflicts = this.handleAsync(async (req, res) => {
+    mergeConflicts = this.handleAsync(async (_req, res) => {
+        this.mergeService;
         res.status(200).json({});
     });
 
-    mergeComplete = this.handleAsync(async (req, res) => {
+    mergeComplete = this.handleAsync(async (_req, res) => {
         res.status(200).json({});
     });
 
