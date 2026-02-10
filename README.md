@@ -18,10 +18,14 @@ Running the project can be done in two ways, either through Docker, or manually 
 If you do not wish to use the Docker that I have created, you may run this project manually following the steps below:
 1. Run `npm install` to install all necessary dependencies to the root project
 2. Setup a PostgreSQL database and configure it in the .env (Example is in .env.example). **The database created must natively support `gen_random_uuid`, sqlite will not work for the migrations.**
-3. Run `npm run migrate` to run migrations into the database.
+3. Run `npm run migrate` to run migrations for the database.
+4. Transpile the code by running `npm run build`
+5. Start up the server by running `npm run start`
 
 
 # Endpoints
+The project will default to localhost:3000 unless otherwise specified.
+
 
 There are two endpoints:
 - `/api/company/merge/` (POST)
