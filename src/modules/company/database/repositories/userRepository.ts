@@ -1,4 +1,4 @@
-import { Kysely } from "kysely";
+import { DeleteResult, Kysely } from "kysely";
 import { Database } from "../../../../config/database/database.types";
 import { IUserRepository } from "./interfaces";
 import { User, UserUpdate, NewUser } from "../schema/user";
@@ -50,11 +50,10 @@ export class UserRepository implements IUserRepository {
             .execute();
     }
 
-    async delete(id: string): Promise<boolean> {
-        const result = await this.db
+    async delete(id: string): Promise<DeleteResult> {
+        return this.db
             .deleteFrom("user")
             .where("id", "=", id)
             .executeTakeFirst();
-        return Number(result.numDeletedRows ?? 0) > 0;
     }
 }

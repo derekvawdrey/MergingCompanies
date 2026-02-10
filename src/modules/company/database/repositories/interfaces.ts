@@ -1,6 +1,7 @@
 import { Company, CompanyUpdate, NewCompany } from "../schema/company";
 import { User, UserUpdate, NewUser } from "../schema/user";
 import { Branch, BranchUpdate, NewBranch } from "../schema/branch";
+import { DeleteResult } from "kysely";
 
 export interface ICompanyRepository {
     findById(id: string): Promise<Company | undefined>;
@@ -8,7 +9,7 @@ export interface ICompanyRepository {
     findAll(): Promise<Company[]>;
     create(data: NewCompany): Promise<Company>;
     update(id: string, data: CompanyUpdate): Promise<Company[] | undefined>;
-    delete(id: string): Promise<boolean>;
+    delete(id: string): Promise<DeleteResult>;
 }
 
 export interface IUserRepository {
@@ -17,7 +18,7 @@ export interface IUserRepository {
     reparentUsers(targetCompanyId: string, duplicateCompanyId: string): Promise<void>;
     create(data: NewUser): Promise<User>;
     update(id: string, data: UserUpdate): Promise<User[] | undefined>;
-    delete(id: string): Promise<boolean>;
+    delete(id: string): Promise<DeleteResult>;
 }
 
 export interface IBranchRepository {
@@ -26,5 +27,5 @@ export interface IBranchRepository {
     reparentBranches(targetCompanyId: string, duplicateCompanyId: string): Promise<void>;
     create(data: NewBranch): Promise<Branch>;
     update(id: string, data: BranchUpdate): Promise<Branch[] | undefined>;
-    delete(id: string): Promise<boolean>;
+    delete(id: string): Promise<DeleteResult>;
 }

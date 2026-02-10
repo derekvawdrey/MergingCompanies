@@ -1,4 +1,4 @@
-import { Kysely } from "kysely";
+import { DeleteResult, Kysely } from "kysely";
 import { Database } from "../../../../config/database/database.types";
 import { IBranchRepository } from "./interfaces";
 import { Branch, BranchUpdate, NewBranch } from "../schema/branch";
@@ -53,11 +53,10 @@ export class BranchRepository implements IBranchRepository {
             .execute();
     }
 
-    async delete(id: string): Promise<boolean> {
-        const result = await this.db
+    async delete(id: string): Promise<DeleteResult> {
+        return this.db
             .deleteFrom("branch")
             .where("id", "=", id)
             .executeTakeFirst();
-        return Number(result.numDeletedRows ?? 0) > 0;
     }
 }
