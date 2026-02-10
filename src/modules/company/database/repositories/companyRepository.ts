@@ -16,6 +16,14 @@ export class CompanyRepository implements ICompanyRepository {
             .executeTakeFirst();
     }
 
+    async findByIds(ids: string[]): Promise<Company[]> {
+        return this.db
+            .selectFrom("company")
+            .selectAll()
+            .where("id", "in", ids)
+            .execute();
+    }
+
     async findAll(): Promise<Company[]> {
         return this.db.selectFrom("company").selectAll().execute();
     }

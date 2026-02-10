@@ -12,13 +12,13 @@ const router = Router();
 const mergeController = container.get<IMergeController>(TYPES.IMergeController);
 
 router.get(
-    "/conflicts",
+    "/:targetId/preview/:duplicateId",
     mergeConflictsValidator,
     handleValidationErrors,
     mergeController.mergeConflicts
 );
 router.post(
-    "/",
+    "/:targetId/merge/:duplicateId",
     mergeCompleteValidator,
     handleValidationErrors,
     mergeController.mergeComplete

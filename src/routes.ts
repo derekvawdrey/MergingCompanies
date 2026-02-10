@@ -4,8 +4,8 @@ import mergeRoutes from "./modules/merge/routes";
 
 const router = Router();
 
-router.use("/company", companyRoutes);
+router.use("/companies", companyRoutes);
 // Merge is primarily used for companies now, so the route to get there will be /company.
-router.use("/company/merge", mergeRoutes);
+router.use("/companies", mergeRoutes);
 
 export default router;

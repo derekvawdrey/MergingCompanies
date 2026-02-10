@@ -27,3 +27,4 @@ export interface CompanyTable {
 export type Company = Selectable<CompanyTable>
 export type NewCompany = Insertable<CompanyTable>
 export type CompanyUpdate = Updateable<CompanyTable>
+export type CompanyUpdateWithId = CompanyUpdate & { id: string }

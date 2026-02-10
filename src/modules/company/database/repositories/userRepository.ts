@@ -6,7 +6,7 @@ import { injectable } from "inversify";
 
 @injectable()
 export class UserRepository implements IUserRepository {
-    constructor(private readonly db: Kysely<Database>) {}
+    constructor(private readonly db: Kysely<Database>) { }
 
     async findById(id: string): Promise<User | undefined> {
         return this.db
@@ -21,6 +21,14 @@ export class UserRepository implements IUserRepository {
             .selectFrom("user")
             .selectAll()
             .where("company_id", "=", companyId)
+            .execute();
+    }
+
+    async reparentUsers(targetCompanyId: string, duplicateCompanyId: string): Promise<void> {
+        await this.db
+            .updateTable("user")
+            .set({ company_id: targetCompanyId })
+            .where("company_id", "=", duplicateCompanyId)
             .execute();
     }
 

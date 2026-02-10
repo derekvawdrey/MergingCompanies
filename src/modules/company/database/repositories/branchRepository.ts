@@ -6,7 +6,8 @@ import { injectable } from "inversify";
 
 @injectable()
 export class BranchRepository implements IBranchRepository {
-    constructor(private readonly db: Kysely<Database>) {}
+    constructor(private readonly db: Kysely<Database>) { }
+
 
     async findById(id: string): Promise<Branch | undefined> {
         const result = this.db
@@ -23,6 +24,14 @@ export class BranchRepository implements IBranchRepository {
             .selectFrom("branch")
             .selectAll()
             .where("company_id", "=", companyId)
+            .execute();
+    }
+
+    async reparentBranches(targetCompanyId: string, duplicateCompanyId: string): Promise<void> {
+        await this.db
+            .updateTable("branch")
+            .set({ company_id: targetCompanyId })
+            .where("company_id", "=", duplicateCompanyId)
             .execute();
     }
 
