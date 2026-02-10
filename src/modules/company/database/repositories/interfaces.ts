@@ -1,5 +1,5 @@
 export interface ICompanyRepository {
-
+    
 }
 
 export interface IUserRepository {
