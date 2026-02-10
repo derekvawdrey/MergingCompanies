@@ -4,6 +4,7 @@ export const TYPES = {
     IMergeController: Symbol.for("IMergeController"),
 
     // Company Module Types
+    ICompanyController: Symbol.for("ICompanyController"),
     IBranchRepository: Symbol.for("IBranchRepository"),
     ICompanyRepository: Symbol.for("ICompanyRepository"),
     IUserRepository: Symbol.for("IUserRepository"),

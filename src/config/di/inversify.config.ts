@@ -11,3 +11,5 @@ container.load(
     companyContainersModule,
     mergeContainersModule
 );
+
+export { container };

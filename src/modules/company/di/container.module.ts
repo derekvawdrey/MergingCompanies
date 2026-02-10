@@ -1,4 +1,6 @@
 import { ContainerModule, ContainerModuleLoadOptions } from "inversify";
+import { ICompanyController } from "../controller/interfaces";
+import { CompanyController } from "../controller/companyController";
 import { ICompanyService } from "../services/interfaces";
 import { CompanyService } from "../services/companyService";
 import { TYPES } from "../../../config/di/types";
@@ -9,6 +11,11 @@ import { BranchRepository } from "../database/repositories/branchRepository";
 
 export const companyContainersModule: ContainerModule = new ContainerModule(
     (options: ContainerModuleLoadOptions) => {
+
+        // Controllers
+        options.bind<ICompanyController>(TYPES.ICompanyController)
+            .to(CompanyController)
+            .inSingletonScope();
 
         // Repositories
         options.bind<ICompanyRepository>(TYPES.ICompanyRepository)
