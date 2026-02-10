@@ -1,4 +1,4 @@
-import { DeleteResult, Kysely } from "kysely";
+import { DeleteResult, Kysely, Transaction } from "kysely";
 import { Database } from "../../../../config/database/database.types";
 import { IBranchRepository } from "./interfaces";
 import { Branch, BranchUpdate, NewBranch } from "../schema/branch";
@@ -9,34 +9,36 @@ export class BranchRepository implements IBranchRepository {
     constructor(private readonly db: Kysely<Database>) { }
 
 
-    async findById(id: string): Promise<Branch | undefined> {
-        const result = this.db
+    async findById(id: string, trx?: Transaction<Database>): Promise<Branch | undefined> {
+        const db = trx ?? this.db;
+        return db
             .selectFrom("branch")
             .selectAll()
             .where("id", "=", id)
             .executeTakeFirst();
-
-        return await result;
     }
 
-    async findByCompanyId(companyId: string): Promise<Branch[]> {
-        return this.db
+    async findByCompanyId(companyId: string, trx?: Transaction<Database>): Promise<Branch[]> {
+        const db = trx ?? this.db;
+        return db
             .selectFrom("branch")
             .selectAll()
             .where("company_id", "=", companyId)
             .execute();
     }
 
-    async reparentBranches(targetCompanyId: string, duplicateCompanyId: string): Promise<void> {
-        await this.db
+    async reparentBranches(targetCompanyId: string, duplicateCompanyId: string, trx?: Transaction<Database>): Promise<void> {
+        const db = trx ?? this.db;
+        await db
             .updateTable("branch")
             .set({ company_id: targetCompanyId })
             .where("company_id", "=", duplicateCompanyId)
             .execute();
     }
 
-    async create(data: NewBranch): Promise<Branch> {
-        const result = await this.db
+    async create(data: NewBranch, trx?: Transaction<Database>): Promise<Branch> {
+        const db = trx ?? this.db;
+        const result = await db
             .insertInto("branch")
             .values(data)
             .returningAll()
@@ -44,8 +46,9 @@ export class BranchRepository implements IBranchRepository {
         return result;
     }
 
-    async update(id: string, data: BranchUpdate): Promise<Branch[] | undefined> {
-        return this.db
+    async update(id: string, data: BranchUpdate, trx?: Transaction<Database>): Promise<Branch[] | undefined> {
+        const db = trx ?? this.db;
+        return db
             .updateTable("branch")
             .set(data)
             .where("id", "=", id)
@@ -53,8 +56,9 @@ export class BranchRepository implements IBranchRepository {
             .execute();
     }
 
-    async delete(id: string): Promise<DeleteResult> {
-        return this.db
+    async delete(id: string, trx?: Transaction<Database>): Promise<DeleteResult> {
+        const db = trx ?? this.db;
+        return db
             .deleteFrom("branch")
             .where("id", "=", id)
             .executeTakeFirst();

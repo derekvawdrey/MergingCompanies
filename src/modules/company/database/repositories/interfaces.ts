@@ -1,31 +1,32 @@
 import { Company, CompanyUpdate, NewCompany } from "../schema/company";
 import { User, UserUpdate, NewUser } from "../schema/user";
 import { Branch, BranchUpdate, NewBranch } from "../schema/branch";
-import { DeleteResult } from "kysely";
+import { DeleteResult, Transaction } from "kysely";
+import { Database } from "../../../../config/database/database.types";
 
 export interface ICompanyRepository {
-    findById(id: string): Promise<Company | undefined>;
-    findByIds(ids: string[]): Promise<Company[]>;
-    findAll(): Promise<Company[]>;
-    create(data: NewCompany): Promise<Company>;
-    update(id: string, data: CompanyUpdate): Promise<Company[] | undefined>;
-    delete(id: string): Promise<DeleteResult>;
+    findById(id: string, trx?: Transaction<Database>): Promise<Company | undefined>;
+    findByIds(ids: string[], trx?: Transaction<Database>): Promise<Company[]>;
+    findAll(trx?: Transaction<Database>): Promise<Company[]>;
+    create(data: NewCompany, trx?: Transaction<Database>): Promise<Company>;
+    update(id: string, data: CompanyUpdate, trx?: Transaction<Database>): Promise<Company[] | undefined>;
+    delete(id: string, trx?: Transaction<Database>): Promise<DeleteResult>;
 }
 
 export interface IUserRepository {
-    findById(id: string): Promise<User | undefined>;
-    findByCompanyId(companyId: string): Promise<User[]>;
-    reparentUsers(targetCompanyId: string, duplicateCompanyId: string): Promise<void>;
-    create(data: NewUser): Promise<User>;
-    update(id: string, data: UserUpdate): Promise<User[] | undefined>;
-    delete(id: string): Promise<DeleteResult>;
+    findById(id: string, trx?: Transaction<Database>): Promise<User | undefined>;
+    findByCompanyId(companyId: string, trx?: Transaction<Database>): Promise<User[]>;
+    reparentUsers(targetCompanyId: string, duplicateCompanyId: string, trx?: Transaction<Database>): Promise<void>;
+    create(data: NewUser, trx?: Transaction<Database>): Promise<User>;
+    update(id: string, data: UserUpdate, trx?: Transaction<Database>): Promise<User[] | undefined>;
+    delete(id: string, trx?: Transaction<Database>): Promise<DeleteResult>;
 }
 
 export interface IBranchRepository {
-    findById(id: string): Promise<Branch | undefined>;
-    findByCompanyId(companyId: string): Promise<Branch[]>;
-    reparentBranches(targetCompanyId: string, duplicateCompanyId: string): Promise<void>;
-    create(data: NewBranch): Promise<Branch>;
-    update(id: string, data: BranchUpdate): Promise<Branch[] | undefined>;
-    delete(id: string): Promise<DeleteResult>;
+    findById(id: string, trx?: Transaction<Database>): Promise<Branch | undefined>;
+    findByCompanyId(companyId: string, trx?: Transaction<Database>): Promise<Branch[]>;
+    reparentBranches(targetCompanyId: string, duplicateCompanyId: string, trx?: Transaction<Database>): Promise<void>;
+    create(data: NewBranch, trx?: Transaction<Database>): Promise<Branch>;
+    update(id: string, data: BranchUpdate, trx?: Transaction<Database>): Promise<Branch[] | undefined>;
+    delete(id: string, trx?: Transaction<Database>): Promise<DeleteResult>;
 }
