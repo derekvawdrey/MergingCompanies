@@ -18,7 +18,7 @@ router.get(
     mergeController.mergeConflicts
 );
 router.post(
-    "/complete",
+    "/",
     mergeCompleteValidator,
     handleValidationErrors,
     mergeController.mergeComplete

@@ -1,5 +1,5 @@
 # Take-home assignment
-The scenario is you have two companies in a database (one is a duplicate of the other, entered erroneously by an employee). Provide an HTTP interface to merge these two companies together. Include in your solution a way for users to resolve conflicts when datapoints differ between the two companies. Ensure your solution also handles the updating of Users and Brances so that they are associated with the correct, resulting company from the merge.
+The scenario is you have two companies in a database (one is a duplicate of the other, entered erroneously by an employee). Provide an HTTP interface to merge these two companies together. Include in your solution a way for users to resolve conflicts when datapoints differ between the two companies. Ensure your solution also handles the updating of Users and Branches so that they are associated with the correct, resulting company from the merge.
 
 - How would you do it?
 - How would you architect the HTTP interface for that?
@@ -10,9 +10,9 @@ The scenario is you have two companies in a database (one is a duplicate of the 
 Running the project can be done in two ways, either through Docker, or manually setting up the project. Docker is the easiest of the two and should ensure that the project works in any environment.
 
 ## Docker
-We will be running this project in development mode for the sake of ease and brevity. **You must have Docker installed** on your local environment to run this!
+**You must have Docker installed** on your local environment to run this!
 
-1. Run `npm run docker:dev:up` to start all necessary services
+1. Run `npm run docker:up` to start all necessary services. If you do not have npm installed, you can just run `docker compose up --build`. This will spin up the backend server and the PostgreSQL database.
 
 ## Manually
 If you do not wish to use the Docker that I have created, you may run this project manually following the steps below:
@@ -24,12 +24,12 @@ If you do not wish to use the Docker that I have created, you may run this proje
 # Endpoints
 
 There are two endpoints:
-- `/api/merge/` (POST)
-- `/api/merge/conflicts` (GET)
+- `/api/company/merge/` (POST)
+- `/api/company/merge/conflicts` (GET)
 
 # Design Decisions and Omissions
 ## Design Decisions
-- I decided to use PostgreSQL for the database as it supports generating UUIDs for the IDs. 
+- I decided to use PostgreSQL for the database as it supports generating UUIDs for the IDs.
 - I excluded any `updated_at` or `created_at` fields in the database for migrations for simplicity. But I would create those if this were going to be a production level system.
 
 ## Questions I came across as I was working on this project
