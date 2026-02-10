@@ -1,4 +1,4 @@
-import { Company, CompanyUpdateWithId } from "../database/schema/company";
+import { Company, CompanyUpdate, CompanyUpdateWithId } from "../database/schema/company";
 
 
 
@@ -41,17 +41,12 @@ export interface ICompanyService {
 
 export interface IMergeService {
     /**
-     * Reparents users and branches from the duplicate company to the target company.
-     * @param targetCompanyId UUID of the target company
-     * @param duplicateCompanyId UUID of the duplicate company whose users and branches will be reparented to the target company
-     * @returns 
-     */
-    //reparentChildren: (targetCompanyId: string, duplicateCompanyId: string) => Promise<void>;
-
-    /**
      * Merges the duplicate company into the target: reparents users and branches, then deletes the duplicate.
      * All steps run in a single transaction.
      */
-    //mergeCompanies: (targetCompanyId: string, duplicateCompanyId: string) => Promise<void>;
-
+    mergeCompanies(
+        targetCompanyId: string,
+        duplicateCompanyId: string,
+        targetCompany: CompanyUpdate
+    ): Promise<void>;
 }

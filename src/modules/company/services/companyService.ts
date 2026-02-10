@@ -1,21 +1,14 @@
 import { inject, injectable } from "inversify";
 import { ICompanyService } from "./interfaces";
-import { IBranchRepository, ICompanyRepository, IUserRepository } from "../database/repositories/interfaces";
+import { ICompanyRepository } from "../database/repositories/interfaces";
 import { TYPES } from "../../../config/di/types";
 import { Company, CompanyUpdateWithId } from "../database/schema/company";
-import { Database } from "../../../config/database/database.types";
-import { Kysely, Transaction } from "kysely";
 
 @injectable()
 export class CompanyService implements ICompanyService {
     constructor(
         @inject(TYPES.ICompanyRepository) private companyRepository: ICompanyRepository,
-        @inject(TYPES.IUserRepository) private userRepository: IUserRepository,
-        @inject(TYPES.IBranchRepository) private branchRepository: IBranchRepository,
-        @inject(TYPES.Database) private db: Kysely<Database>
-    ) {
-
-    }
+    ) {}
 
     async doCompaniesExist(ids: string[]): Promise<boolean> {
         const companies = await this.companyRepository.findByIds(ids);
@@ -33,7 +26,7 @@ export class CompanyService implements ICompanyService {
     async updateCompany(
         data: CompanyUpdateWithId
     ): Promise<Company | null> {
-        return null;
+        return await this.companyRepository.update(data.id, data) ?? null;
     }
 
     async deleteCompany(id: string): Promise<void> {

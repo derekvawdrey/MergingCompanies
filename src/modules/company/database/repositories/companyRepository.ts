@@ -43,14 +43,14 @@ export class CompanyRepository implements ICompanyRepository {
         return result;
     }
 
-    async update(id: string, data: CompanyUpdate, trx?: Transaction<Database>): Promise<Company[] | undefined> {
+    async update(id: string, data: CompanyUpdate, trx?: Transaction<Database>): Promise<Company | undefined> {
         const db = trx ?? this.db;
         return db
             .updateTable("company")
             .set(data)
             .where("id", "=", id)
             .returningAll()
-            .execute();
+            .executeTakeFirstOrThrow();
     }
 
     async delete(id: string, trx?: Transaction<Database>): Promise<DeleteResult> {

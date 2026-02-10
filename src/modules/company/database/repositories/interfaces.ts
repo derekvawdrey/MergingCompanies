@@ -9,7 +9,7 @@ export interface ICompanyRepository {
     findByIds(ids: string[], trx?: Transaction<Database>): Promise<Company[]>;
     findAll(trx?: Transaction<Database>): Promise<Company[]>;
     create(data: NewCompany, trx?: Transaction<Database>): Promise<Company>;
-    update(id: string, data: CompanyUpdate, trx?: Transaction<Database>): Promise<Company[] | undefined>;
+    update(id: string, data: CompanyUpdate, trx?: Transaction<Database>): Promise<Company | undefined>;
     delete(id: string, trx?: Transaction<Database>): Promise<DeleteResult>;
 }
 
