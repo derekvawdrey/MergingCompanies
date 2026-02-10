@@ -1,12 +1,14 @@
+import { inject } from "inversify";
 import { DeleteResult, Kysely, Transaction } from "kysely";
 import { Database } from "../../../../config/database/database.types";
+import { TYPES } from "../../../../config/di/types";
 import { ICompanyRepository } from "./interfaces";
 import { Company, CompanyUpdate, NewCompany } from "../schema/company";
 import { injectable } from "inversify";
 
 @injectable()
 export class CompanyRepository implements ICompanyRepository {
-    constructor(private readonly db: Kysely<Database>) {}
+    constructor(@inject(TYPES.Database) private readonly db: Kysely<Database>) {}
 
     async findById(id: string, trx?: Transaction<Database>): Promise<Company | undefined> {
         const db = trx ?? this.db;

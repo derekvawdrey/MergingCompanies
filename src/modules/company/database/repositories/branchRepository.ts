@@ -1,12 +1,16 @@
+import { inject } from "inversify";
 import { DeleteResult, Kysely, Transaction } from "kysely";
 import { Database } from "../../../../config/database/database.types";
+import { TYPES } from "../../../../config/di/types";
 import { IBranchRepository } from "./interfaces";
 import { Branch, BranchUpdate, NewBranch } from "../schema/branch";
 import { injectable } from "inversify";
 
 @injectable()
 export class BranchRepository implements IBranchRepository {
-    constructor(private readonly db: Kysely<Database>) { }
+    constructor(
+        @inject(TYPES.Database) private readonly db: Kysely<Database>
+    ) { }
 
 
     async findById(id: string, trx?: Transaction<Database>): Promise<Branch | undefined> {

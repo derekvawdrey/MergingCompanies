@@ -1,4 +1,6 @@
 export const TYPES = {
+    Database: Symbol.for("Database"),
+
     // Merge Module Types
     IMergeService: Symbol.for("IMergeService"),
     IMergeController: Symbol.for("IMergeController"),
