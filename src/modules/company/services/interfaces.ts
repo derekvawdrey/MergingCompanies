@@ -1,5 +1,5 @@
-import { Company, CompanyUpdate, CompanyUpdateWithId } from "../database/schema/company";
-import { MergeConflicts } from "../types/merge.types";
+import { Company, CompanyUpdateWithId } from "../database/schema/company";
+import { MergeConflicts, MergeCompleteCompanyUpdate } from "../types/merge.types";
 
 
 
@@ -17,6 +17,13 @@ export interface ICompanyService {
      * @returns Company object if found, otherwise null
      */
     getCompanyById: (id: string) => Promise<Company | null>;
+
+    /**
+     * Get multiple companies by their IDs.
+     * @param ids 
+     * @returns Company array of companies with the provided IDs that exist in the database
+     */
+    getCompaniesByIds: (ids: string[]) => Promise<Company[]>
 
     /**
      * Retrieve all companies.
@@ -55,6 +62,6 @@ export interface IMergeService {
     mergeCompanies(
         targetCompanyId: string,
         duplicateCompanyId: string,
-        targetCompany: CompanyUpdate
+        targetCompany: MergeCompleteCompanyUpdate
     ): Promise<void>;
 }

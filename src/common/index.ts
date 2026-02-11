@@ -1,2 +1,2 @@
 export * from "./baseController";
-export * from "./HttpError";
+export * from "./httpError";

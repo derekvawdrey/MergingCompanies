@@ -3,7 +3,7 @@ import { container } from "../../config/di/inversify.config";
 import { TYPES } from "../../config/di/types";
 import { ICompanyController, IMergeController } from "./controller/interfaces";
 import { handleValidationErrors } from "../../common/middleware/validation.middleware";
-import { mergeConflictsValidator, mergeCompleteValidator } from "./validators";
+import { mergeParamValidator, mergeCompleteValidator } from "./validators";
 
 const router = Router();
 const companyController = container.get<ICompanyController>(TYPES.ICompanyController);
@@ -13,12 +13,13 @@ router.get("/", companyController.getCompanies);
 router.get("/:id", companyController.getCompany);
 router.get(
     "/:targetId/preview-merge/:duplicateId",
-    mergeConflictsValidator,
+    mergeParamValidator,
     handleValidationErrors,
     mergeController.previewMerge
 );
 router.post(
     "/:targetId/merge/:duplicateId",
+    mergeParamValidator,
     mergeCompleteValidator,
     handleValidationErrors,
     mergeController.completeMerge

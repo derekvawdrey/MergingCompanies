@@ -9,6 +9,17 @@ const optionalString: Schema[string] = {
     trim: true,
 };
 
+/** Base validation for required UUID params. */
+const requiredUuidParam: Schema[string] = {
+    in: ["params"],
+    notEmpty: {
+        errorMessage: "Required",
+    },
+    isUUID: {
+        errorMessage: "Must be a valid UUID",
+    },
+};
+
 /** 
  * Ensures schema has a validator for every MergeCompleteCompanyUpdate key. 
  * Errors if you add a Company field but forget the validator. 
@@ -28,7 +39,10 @@ export const mergeCompleteSchema = buildMergeCompleteSchema({
     postal_code: optionalString,
 });
 
-export const mergeConflictsSchema: Schema = {};
+export const mergeParamSchema: Schema = {
+    targetId: requiredUuidParam,
+    duplicateId: requiredUuidParam,
+};
 
-export const mergeConflictsValidator = checkSchema(mergeConflictsSchema);
+export const mergeParamValidator = checkSchema(mergeParamSchema);
 export const mergeCompleteValidator = checkSchema(mergeCompleteSchema);
