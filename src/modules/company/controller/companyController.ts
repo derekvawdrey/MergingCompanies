@@ -13,8 +13,8 @@ export class CompanyController extends BaseController implements ICompanyControl
     }
 
     getCompany = this.handleAsync(async (req, res) => {
-        const { id } = req.params as { id: string };
-        const company = await this.companyService.getCompanyById(id);
+        const { companyId } = req.params as { companyId: string };
+        const company = await this.companyService.getCompanyById(companyId);
         if (!company) {
             throw new HttpError(404, "Company with provided id does not exist");
         }

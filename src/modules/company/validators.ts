@@ -44,5 +44,10 @@ export const mergeParamSchema: Schema = {
     duplicateId: requiredUuidParam,
 };
 
+export const companyIdParamSchema: Schema = {
+    companyId: requiredUuidParam,
+};
+
+export const companyIdValidator = checkSchema(companyIdParamSchema);
 export const mergeParamValidator = checkSchema(mergeParamSchema);
 export const mergeCompleteValidator = checkSchema(mergeCompleteSchema);

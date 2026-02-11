@@ -35,7 +35,7 @@ export class MergeService implements IMergeService {
         const editableKeys = (Object.keys(targetCompany) as (keyof Company)[]).filter(
             (k) => k !== "id"
         );
-        
+
         for (const key of editableKeys) {
             if (targetCompany[key] !== duplicateCompany[key]) {
                 conflicts.push({
@@ -57,13 +57,13 @@ export class MergeService implements IMergeService {
         targetCompanyId: string,
         duplicateCompanyId: string,
         targetCompany: MergeCompleteCompanyUpdate
-    ): Promise<void> {
+    ): Promise<Company | undefined> {
         if (targetCompanyId === duplicateCompanyId) {
             throw new HttpError(400, "Companies must not have the same ID");
         }
 
         // Throw everything into transaction since we want to ensure all-or-nothing for this operation
-        await this.db.transaction().execute(async (trx) => {
+        const result = await this.db.transaction().execute(async (trx) => {
             const [target, duplicate] = await Promise.all([
                 this.companyRepository.findById(targetCompanyId, trx),
                 this.companyRepository.findById(duplicateCompanyId, trx),
@@ -78,9 +78,13 @@ export class MergeService implements IMergeService {
                 this.branchRepository.reparentBranches(target.id, duplicate.id, trx)
             ]);
 
-            await this.companyRepository.update(target.id, targetCompany, trx)
+            const mergedCompany = await this.companyRepository.update(target.id, targetCompany, trx)
             await this.companyRepository.delete(duplicate.id, trx);
+
+            return mergedCompany;
         });
+
+        return result;
     }
 
 

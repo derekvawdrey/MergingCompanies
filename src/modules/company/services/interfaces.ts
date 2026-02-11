@@ -57,5 +57,5 @@ export interface IMergeService {
         targetCompanyId: string,
         duplicateCompanyId: string,
         targetCompany: MergeCompleteCompanyUpdate
-    ): Promise<void>;
+    ): Promise<Company | undefined>;
 }
