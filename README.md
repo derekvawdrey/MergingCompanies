@@ -27,10 +27,16 @@ If you do not wish to use the Docker that I have created, you may run this proje
 # Endpoints
 The project will default to localhost:3000 unless otherwise specified.
 
-There are two endpoints:
+The two merging endpoints are:
 - `/api/companies/:targetId/preview-merge/:duplicateId` (GET)
 - `/api/companies/:targetId/merge/:duplicateId` (POST)
 
+However, I have also written three other endpoints to make the front-end interface easy to use.
+- `/api/companies` (GET)
+- `/api/companies/:id` (POST)
+- `/api/companies/search` (GET)
+
+Merging APIs
 ---
 
 ## GET `/api/companies/:targetId/preview-merge/:duplicateId`
