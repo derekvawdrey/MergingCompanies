@@ -19,10 +19,10 @@ export class MergeService implements IMergeService {
     ) { }
 
     async getMergeConflicts(targetCompanyId: string, duplicateCompanyId: string): Promise<MergeConflicts> {
-        if(targetCompanyId == duplicateCompanyId){
-            throw new HttpError(400, "Companies must not have the same ID")
+        if (targetCompanyId === duplicateCompanyId) {
+            throw new HttpError(400, "Companies must not have the same ID");
         }
-        
+
         const targetCompany = await this.companyService.getCompanyById(targetCompanyId);
         const duplicateCompany = await this.companyService.getCompanyById(duplicateCompanyId);
         const conflicts: MergeConflict[] = [];
@@ -31,7 +31,12 @@ export class MergeService implements IMergeService {
             throw new HttpError(404, "Companies with provided ids do not both exist");
         }
 
-        for (const key of Object.keys(targetCompany) as (keyof Company)[]) {
+        // Grab only the fields we want to compare, currently id is excluded since it doesn't make sense to compare those.
+        const editableKeys = (Object.keys(targetCompany) as (keyof Company)[]).filter(
+            (k) => k !== "id"
+        );
+
+        for (const key of editableKeys) {
             if (targetCompany[key] !== duplicateCompany[key]) {
                 conflicts.push({
                     field: key,
@@ -53,22 +58,28 @@ export class MergeService implements IMergeService {
         duplicateCompanyId: string,
         targetCompany: MergeCompleteCompanyUpdate
     ): Promise<void> {
-        if(targetCompanyId == duplicateCompanyId){
-            throw new HttpError(400, "Companies must not have the same ID")
+        if (targetCompanyId === duplicateCompanyId) {
+            throw new HttpError(400, "Companies must not have the same ID");
         }
 
-        const target = await this.companyService.getCompanyById(targetCompanyId);
-        const duplicate = await this.companyService.getCompanyById(duplicateCompanyId);
-
-        if (!target || !duplicate) {
-            throw new HttpError(404, "Companies with provided ids do not both exist");
-        }
-
+        // Throw everything into transaction since we want to ensure all-or-nothing for this operation
         await this.db.transaction().execute(async (trx) => {
-            await this.userRepository.reparentUsers(targetCompanyId, duplicateCompanyId, trx);
-            await this.branchRepository.reparentBranches(targetCompanyId, duplicateCompanyId, trx);
-            await this.companyRepository.update(targetCompanyId, targetCompany, trx)
-            await this.companyRepository.delete(duplicateCompanyId, trx);
+            const [target, duplicate] = await Promise.all([
+                this.companyRepository.findById(targetCompanyId, trx),
+                this.companyRepository.findById(duplicateCompanyId, trx),
+            ]);
+
+            if (!target || !duplicate) {
+                throw new HttpError(404, "Companies with provided ids do not both exist");
+            }
+
+            await Promise.all([
+                this.userRepository.reparentUsers(target.id, duplicate.id, trx),
+                this.branchRepository.reparentBranches(target.id, duplicate.id, trx)
+            ]);
+
+            await this.companyRepository.update(target.id, targetCompany, trx)
+            await this.companyRepository.delete(duplicate.id, trx);
         });
     }
 

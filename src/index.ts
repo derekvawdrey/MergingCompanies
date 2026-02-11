@@ -26,7 +26,7 @@ app.use((
     console.error(err);
 
     const status = err instanceof HttpError ? err.status : 500;
-    const message = err.message || "Internal server error";
+    const message = err instanceof HttpError ? err.message : "Internal server error";
 
     res.status(status).json({ message });
 });
