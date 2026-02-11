@@ -4,9 +4,9 @@ import {
     Selectable,
     Updateable,
 } from 'kysely'
+
 /**
- * User table represents a user of the system.
- * These are people who have logged in through the FamilySearch API.
+ * 
  */
 export interface BranchTable {
     id: Generated<string>;

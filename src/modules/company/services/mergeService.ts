@@ -19,6 +19,10 @@ export class MergeService implements IMergeService {
     ) { }
 
     async getMergeConflicts(targetCompanyId: string, duplicateCompanyId: string): Promise<MergeConflicts> {
+        if(targetCompanyId == duplicateCompanyId){
+            throw new HttpError(400, "Companies must not have the same ID")
+        }
+        
         const targetCompany = await this.companyService.getCompanyById(targetCompanyId);
         const duplicateCompany = await this.companyService.getCompanyById(duplicateCompanyId);
         const conflicts: MergeConflict[] = [];
@@ -49,8 +53,14 @@ export class MergeService implements IMergeService {
         duplicateCompanyId: string,
         targetCompany: MergeCompleteCompanyUpdate
     ): Promise<void> {
-        const doesExist = await this.companyService.doCompaniesExist([targetCompanyId, duplicateCompanyId])
-        if (!doesExist) {
+        if(targetCompanyId == duplicateCompanyId){
+            throw new HttpError(400, "Companies must not have the same ID")
+        }
+
+        const target = await this.companyService.getCompanyById(targetCompanyId);
+        const duplicate = await this.companyService.getCompanyById(duplicateCompanyId);
+
+        if (!target || !duplicate) {
             throw new HttpError(404, "Companies with provided ids do not both exist");
         }
 

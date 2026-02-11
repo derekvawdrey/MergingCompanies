@@ -50,14 +50,14 @@ export class BranchRepository implements IBranchRepository {
         return result;
     }
 
-    async update(id: string, data: BranchUpdate, trx?: Transaction<Database>): Promise<Branch[] | undefined> {
+    async update(id: string, data: BranchUpdate, trx?: Transaction<Database>): Promise<Branch | undefined> {
         const db = trx ?? this.db;
         return db
             .updateTable("branch")
             .set(data)
             .where("id", "=", id)
             .returningAll()
-            .execute();
+            .executeTakeFirst();
     }
 
     async delete(id: string, trx?: Transaction<Database>): Promise<DeleteResult> {

@@ -47,14 +47,14 @@ export class UserRepository implements IUserRepository {
         return result;
     }
 
-    async update(id: string, data: UserUpdate, trx?: Transaction<Database>): Promise<User[] | undefined> {
+    async update(id: string, data: UserUpdate, trx?: Transaction<Database>): Promise<User | undefined> {
         const db = trx ?? this.db;
         return db
             .updateTable("user")
             .set(data)
             .where("id", "=", id)
             .returningAll()
-            .execute();
+            .executeTakeFirst();
     }
 
     async delete(id: string, trx?: Transaction<Database>): Promise<DeleteResult> {

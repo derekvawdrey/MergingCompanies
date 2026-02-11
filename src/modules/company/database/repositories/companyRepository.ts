@@ -50,7 +50,7 @@ export class CompanyRepository implements ICompanyRepository {
             .set(data)
             .where("id", "=", id)
             .returningAll()
-            .executeTakeFirstOrThrow();
+            .executeTakeFirst();
     }
 
     async delete(id: string, trx?: Transaction<Database>): Promise<DeleteResult> {

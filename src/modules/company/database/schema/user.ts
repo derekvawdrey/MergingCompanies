@@ -5,9 +5,9 @@ import {
     Updateable,
 } from 'kysely'
 
+
 /**
- * User table represents a user of the system.
- * These are people who have logged in through the FamilySearch API.
+ * User Table represents people associated with a specific company
  */
 export interface UserTable {
     id: Generated<string>;

@@ -6,12 +6,6 @@ import { MergeConflicts, MergeCompleteCompanyUpdate } from "../types/merge.types
 export interface ICompanyService {
 
     /**
-     * Returns true if all company IDs in the input array exist in the database, false otherwise.
-     * @param ids 
-     */
-    doCompaniesExist(ids: string[]): Promise<boolean>
-
-    /**
      * Get a company by its ID.
      * @param id 
      * @returns Company object if found, otherwise null

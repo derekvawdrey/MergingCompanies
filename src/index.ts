@@ -13,8 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api", router);
 
-app.listen(config.port, () => {
-    console.log(`Server running on port ${config.port}`);
+app.get("/health", (_req, res) => {
+    res.status(200).send("ok");
 });
 
 app.use((
@@ -31,8 +31,8 @@ app.use((
     res.status(status).json({ message });
 });
 
-app.get("/health", (_req, res) => {
-    res.status(200).send("ok");
+app.listen(config.port, () => {
+    console.log(`Server running on port ${config.port}`);
 });
 
 export default app;

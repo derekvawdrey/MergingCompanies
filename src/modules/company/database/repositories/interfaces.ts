@@ -18,7 +18,7 @@ export interface IUserRepository {
     findByCompanyId(companyId: string, trx?: Transaction<Database>): Promise<User[]>;
     reparentUsers(targetCompanyId: string, duplicateCompanyId: string, trx?: Transaction<Database>): Promise<void>;
     create(data: NewUser, trx?: Transaction<Database>): Promise<User>;
-    update(id: string, data: UserUpdate, trx?: Transaction<Database>): Promise<User[] | undefined>;
+    update(id: string, data: UserUpdate, trx?: Transaction<Database>): Promise<User | undefined>;
     delete(id: string, trx?: Transaction<Database>): Promise<DeleteResult>;
 }
 
@@ -27,6 +27,6 @@ export interface IBranchRepository {
     findByCompanyId(companyId: string, trx?: Transaction<Database>): Promise<Branch[]>;
     reparentBranches(targetCompanyId: string, duplicateCompanyId: string, trx?: Transaction<Database>): Promise<void>;
     create(data: NewBranch, trx?: Transaction<Database>): Promise<Branch>;
-    update(id: string, data: BranchUpdate, trx?: Transaction<Database>): Promise<Branch[] | undefined>;
+    update(id: string, data: BranchUpdate, trx?: Transaction<Database>): Promise<Branch | undefined>;
     delete(id: string, trx?: Transaction<Database>): Promise<DeleteResult>;
 }

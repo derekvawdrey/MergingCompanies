@@ -6,8 +6,7 @@ import {
 } from 'kysely'
 
 /**
- * User table represents a user of the system.
- * These are people who have logged in through the FamilySearch API.
+ * 
  */
 export interface CompanyTable {
     id: Generated<string>;
