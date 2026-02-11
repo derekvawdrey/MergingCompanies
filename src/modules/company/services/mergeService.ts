@@ -21,10 +21,11 @@ export class MergeService implements IMergeService {
         duplicateCompanyId: string,
         targetCompany: CompanyUpdate
     ): Promise<void> {
-
-        const doesExist = this.companyService.doCompaniesExist([targetCompanyId, duplicateCompanyId])
+        const doesExist = await this.companyService.doCompaniesExist([targetCompanyId, duplicateCompanyId])
         if(!doesExist){
-            throw new Error("")
+            // Maybe would be better to do the searches individually because
+            // this doesn't tell us which of the two companies doesn't exist, but for simplicity's sake we'll just throw a generic error
+            throw new Error("Companies with provided ids do not both exist");
         }
 
         await this.db.transaction().execute(async (trx) => {

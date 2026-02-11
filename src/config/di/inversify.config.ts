@@ -3,7 +3,6 @@
  */
 import { Container } from "inversify";
 import { Kysely } from "kysely";
-import { mergeContainersModule } from "../../modules/merge/di/container.module";
 import { companyContainersModule } from "../../modules/company/di/container.module";
 import { TYPES } from "./types";
 import { Database } from "../database/database.types";
@@ -14,8 +13,7 @@ const container = new Container();
 container.bind<Kysely<Database>>(TYPES.Database).toConstantValue(db);
 
 container.loadSync(
-    companyContainersModule,
-    mergeContainersModule
+    companyContainersModule
 );
 
 export { container };

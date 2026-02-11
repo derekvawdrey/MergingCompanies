@@ -20,5 +20,4 @@ export class MergeController extends BaseController implements IMergeController 
     mergeComplete = this.handleAsync(async (_req, res) => {
         res.status(200).json({});
     });
-
 }

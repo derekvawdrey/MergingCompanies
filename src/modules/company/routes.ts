@@ -12,7 +12,7 @@ const mergeController = container.get<IMergeController>(TYPES.IMergeController);
 router.get("/", companyController.getCompanies);
 router.get("/:id", companyController.getCompany);
 router.get(
-    "/:targetId/preview/:duplicateId",
+    "/:targetId/preview-merge/:duplicateId",
     mergeConflictsValidator,
     handleValidationErrors,
     mergeController.mergeConflicts
