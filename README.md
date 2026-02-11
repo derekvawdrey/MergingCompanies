@@ -137,6 +137,7 @@ Returns the merged business information
 ## Design Decisions
 - I decided to use PostgreSQL for the database as it supports generating UUIDs for the IDs.
 - I excluded any `updated_at` or `created_at` fields in the database for migrations for simplicity. But I would create those if this were going to be a production level system.
+- The current merging system does not take into account situations where you might have duplicate users and branches.
 
 ## Questions I came across as I was working on this project
 - Are there any situations where a company might have multiple different addresses?

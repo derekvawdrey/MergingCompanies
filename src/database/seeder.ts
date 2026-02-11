@@ -43,6 +43,40 @@ async function seed() {
             state: 'IL',
             postal_code: '62565',
         },
+        // Obvious duplicates of Acme Corp (minor name/address differences)
+        {
+            name: 'Acme Corporation',
+            address_line_1: '123 Main Street',
+            address_line_2: 'Ste 100',
+            city: 'Springfield',
+            state: 'Illinois',
+            postal_code: '62701',
+        },
+        {
+            name: 'ACME CORP',
+            address_line_1: '123 Main St',
+            address_line_2: 'Suite 100',
+            city: 'Springfield',
+            state: 'IL',
+            postal_code: '62701-1234',
+        },
+        // Obvious duplicates of Globex Industries
+        {
+            name: 'Globex Industries, Inc.',
+            address_line_1: '456 Industrial Parkway',
+            address_line_2: '',
+            city: 'Shelbyville',
+            state: 'IL',
+            postal_code: '62565',
+        },
+        {
+            name: 'Globex Industries',
+            address_line_1: '456 Industrial Pkwy',
+            address_line_2: 'Bldg 2',
+            city: 'Shelbyville',
+            state: 'Illinois',
+            postal_code: '62565',
+        },
     ]
 
     const insertedCompanies = await db
