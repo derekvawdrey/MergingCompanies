@@ -1,5 +1,5 @@
 import { inject } from "inversify";
-import { DeleteResult, Kysely, Transaction, sql } from "kysely";
+import { DeleteResult, Kysely, Transaction } from "kysely";
 import { Database } from "../../../../config/database/database.types";
 import { TYPES } from "../../../../config/di/types";
 import { ICompanyRepository } from "./interfaces";
