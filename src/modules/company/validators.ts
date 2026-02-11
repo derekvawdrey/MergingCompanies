@@ -48,6 +48,18 @@ export const companyIdParamSchema: Schema = {
     companyId: requiredUuidParam,
 };
 
+/** Search query: optional string, validated when present (trimmed, max length). */
+const searchQuerySchema: Schema = {
+    query: {
+        in: ["query"],
+        optional: false,
+        isString: true,
+        trim: true,
+        isLength: { options: { max: 200 }, errorMessage: "Search query must be at most 200 characters" },
+    },
+};
+
 export const companyIdValidator = checkSchema(companyIdParamSchema);
 export const mergeParamValidator = checkSchema(mergeParamSchema);
 export const mergeCompleteValidator = checkSchema(mergeCompleteSchema);
+export const searchQueryValidator = checkSchema(searchQuerySchema);

@@ -3,13 +3,19 @@ import { container } from "../../config/di/inversify.config";
 import { TYPES } from "../../config/di/types";
 import { ICompanyController, IMergeController } from "./controller/interfaces";
 import { handleValidationErrors } from "../../common/middleware/validation.middleware";
-import { mergeParamValidator, mergeCompleteValidator, companyIdValidator } from "./validators";
+import { mergeParamValidator, mergeCompleteValidator, companyIdValidator, searchQueryValidator } from "./validators";
 
 const router = Router();
 const companyController = container.get<ICompanyController>(TYPES.ICompanyController);
 const mergeController = container.get<IMergeController>(TYPES.IMergeController);
 
 router.get("/", companyController.getCompanies);
+router.get(
+    "/search",
+    searchQueryValidator,
+    handleValidationErrors,
+    companyController.searchCompany
+);
 router.get(
     "/:companyId",
     companyIdValidator,

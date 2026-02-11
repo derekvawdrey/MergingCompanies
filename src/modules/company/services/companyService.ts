@@ -23,6 +23,10 @@ export class CompanyService implements ICompanyService {
         return await this.companyRepository.findById(id) ?? null;
     }
 
+    async searchCompany(searchQuery: string): Promise<Company[]> {
+        return await this.companyRepository.search(searchQuery);
+    }
+
     async getAllCompanies(): Promise<Company[]> {
         return await this.companyRepository.findAll();
     }

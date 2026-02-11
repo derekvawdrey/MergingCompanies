@@ -1,5 +1,5 @@
 import { inject } from "inversify";
-import { DeleteResult, Kysely, Transaction } from "kysely";
+import { DeleteResult, Kysely, Transaction, sql } from "kysely";
 import { Database } from "../../../../config/database/database.types";
 import { TYPES } from "../../../../config/di/types";
 import { ICompanyRepository } from "./interfaces";
@@ -31,6 +31,17 @@ export class CompanyRepository implements ICompanyRepository {
     async findAll(trx?: Transaction<Database>): Promise<Company[]> {
         const db = trx ?? this.db;
         return db.selectFrom("company").selectAll().execute();
+    }
+
+    async search(searchQuery: string, trx?: Transaction<Database>): Promise<Company[]> {
+        const db = trx ?? this.db;
+        const pattern = `%${searchQuery}%`;
+        return db
+            .selectFrom("company")
+            .selectAll()
+            .where((eb) => eb("name", "ilike", pattern))
+            .limit(5)
+            .execute();
     }
 
     async create(data: NewCompany, trx?: Transaction<Database>): Promise<Company> {

@@ -27,6 +27,13 @@ export interface ICompanyService {
     getAllCompanies: () => Promise<Company[]>;
 
     /**
+     * Search companies by name (case-insensitive partial match).
+     * @param searchQuery Search string to match against company name
+     * @returns Company array of matching companies
+     */
+    searchCompany: (searchQuery: string) => Promise<Company[]>;
+
+    /**
      * Updates a company by its ID with the provided data.
      * @param data Data to update the company with, must include the company ID to update
      * @returns Company object if update was successful, otherwise null

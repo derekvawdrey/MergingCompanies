@@ -27,4 +27,10 @@ export class CompanyController extends BaseController implements ICompanyControl
         res.status(200).json(companies);
     });
 
+    searchCompany = this.handleAsync(async (req, res) => {
+        const query = (req.query["query"] ?? "") as string;
+        const companies = await this.companyService.searchCompany(query);
+        res.status(200).json(companies);
+    });
+
 }
