@@ -22,7 +22,7 @@ export class MergeController extends BaseController implements IMergeController 
 
     completeMerge = this.handleAsync(async (req, res) => {
         const { targetId, duplicateId } = req.params as { targetId: string; duplicateId: string };
-        const companyUpdate = matchedData(req) as MergeCompleteCompanyUpdate;
+        const companyUpdate = matchedData(req, { locations: ['body'] }) as MergeCompleteCompanyUpdate;
         const result = await this.mergeService.mergeCompanies(targetId, duplicateId, companyUpdate);
         res.status(200).json(result);
     });
