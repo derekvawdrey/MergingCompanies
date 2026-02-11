@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import express from "express";
 import router from "./routes";
 import config from "./config/config";
+import cors from "cors";
 import { Request, Response, NextFunction } from "express";
 import { HttpError } from "./common";
 
@@ -12,6 +13,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api", router);
+
+// Decided to disable cors, wouldn't do this in prod
+// but doesn't really matter 
+app.use(cors({ origin: false }));
 
 app.get("/health", (_req, res) => {
     res.status(200).send("ok");
