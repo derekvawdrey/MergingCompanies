@@ -15,13 +15,13 @@ router.get(
     "/:targetId/preview-merge/:duplicateId",
     mergeConflictsValidator,
     handleValidationErrors,
-    mergeController.mergeConflicts
+    mergeController.previewMerge
 );
 router.post(
     "/:targetId/merge/:duplicateId",
     mergeCompleteValidator,
     handleValidationErrors,
-    mergeController.mergeComplete
+    mergeController.completeMerge
 );
 
 export default router;

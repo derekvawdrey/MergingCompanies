@@ -1,4 +1,5 @@
 import { Company, CompanyUpdate, CompanyUpdateWithId } from "../database/schema/company";
+import { MergeConflicts } from "../types/merge.types";
 
 
 
@@ -40,6 +41,13 @@ export interface ICompanyService {
 }
 
 export interface IMergeService {
+
+    /**
+     * Gets all conflicts that would arise from merging the duplicate company into the target company that need to be resolved.
+     */
+    getMergeConflicts(targetCompanyId: string, duplicateCompanyId: string): Promise<MergeConflicts>;
+
+
     /**
      * Merges the duplicate company into the target: reparents users and branches, then deletes the duplicate.
      * All steps run in a single transaction.

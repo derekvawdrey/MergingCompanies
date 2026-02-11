@@ -4,6 +4,7 @@ import express from "express";
 import router from "./routes";
 import config from "./config/config";
 import { Request, Response, NextFunction } from "express";
+import { HttpError } from "./common";
 
 dotenv.config();
 
@@ -24,9 +25,10 @@ app.use((
 ) => {
     console.error(err);
 
-    res.status(500).json({
-        message: err.message || "Internal server error",
-    });
+    const status = err instanceof HttpError ? err.status : 500;
+    const message = err.message || "Internal server error";
+
+    res.status(status).json({ message });
 });
 
 app.get("/health", (_req, res) => {

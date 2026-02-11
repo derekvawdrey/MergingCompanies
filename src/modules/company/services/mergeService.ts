@@ -5,6 +5,8 @@ import { Database } from "../../../config/database/database.types";
 import { TYPES } from "../../../config/di/types";
 import { ICompanyRepository, IUserRepository, IBranchRepository } from "../database/repositories/interfaces";
 import { CompanyUpdate } from "../database/schema/company";
+import { HttpError } from "../../../common";
+import { MergeConflicts } from "../types/merge.types";
 
 @injectable()
 export class MergeService implements IMergeService {
@@ -16,16 +18,18 @@ export class MergeService implements IMergeService {
         @inject(TYPES.Database) private db: Kysely<Database>
     ) { }
 
+    getMergeConflicts(targetCompanyId: string, duplicateCompanyId: string): Promise<MergeConflicts> {
+        throw new Error("Method not implemented.");
+    }
+
     async mergeCompanies(
         targetCompanyId: string,
         duplicateCompanyId: string,
         targetCompany: CompanyUpdate
     ): Promise<void> {
         const doesExist = await this.companyService.doCompaniesExist([targetCompanyId, duplicateCompanyId])
-        if(!doesExist){
-            // Maybe would be better to do the searches individually because
-            // this doesn't tell us which of the two companies doesn't exist, but for simplicity's sake we'll just throw a generic error
-            throw new Error("Companies with provided ids do not both exist");
+        if (!doesExist) {
+            throw new HttpError(404, "Companies with provided ids do not both exist");
         }
 
         await this.db.transaction().execute(async (trx) => {

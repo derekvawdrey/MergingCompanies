@@ -9,7 +9,10 @@ const optionalString: Schema[string] = {
     trim: true,
 };
 
-/** Ensures schema has a validator for every MergeCompleteCompanyUpdate key. Errors if you add a Company field but forget the validator. */
+/** 
+ * Ensures schema has a validator for every MergeCompleteCompanyUpdate key. 
+ * Errors if you add a Company field but forget the validator. 
+ * */
 function buildMergeCompleteSchema<T extends Record<keyof MergeCompleteCompanyUpdate, Schema[string]>>(
     schema: T
 ): T {
