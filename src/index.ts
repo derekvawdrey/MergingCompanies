@@ -12,11 +12,10 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/api", router);
 
-// Decided to disable cors, wouldn't do this in prod
-// but doesn't really matter 
-app.use(cors({ origin: false }));
+app.use(cors({ origin: true }));
+
+app.use("/api", router);
 
 app.get("/health", (_req, res) => {
     res.status(200).send("ok");
