@@ -35,7 +35,7 @@ export class MergeService implements IMergeService {
         const editableKeys = (Object.keys(targetCompany) as (keyof Company)[]).filter(
             (k) => k !== "id"
         );
-
+        
         for (const key of editableKeys) {
             if (targetCompany[key] !== duplicateCompany[key]) {
                 conflicts.push({
