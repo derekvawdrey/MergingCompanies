@@ -23,6 +23,8 @@ If you do not wish to use the Docker that I have created, you may run this proje
 5. Run `npm run seed` to seed the database
 6. Start up the server by running `npm run start`
 
+## Tests
+I added unit tests for `MergeService` covering key success and error paths. I did not add integration tests (database/HTTP) due to time constraints. Those would be the next step to validate repository behavior and transactional correctness end-to-end. The basic unit tests can be run with `npm run test`.
 
 # Endpoints
 The project will default to localhost:3000 unless otherwise specified.
