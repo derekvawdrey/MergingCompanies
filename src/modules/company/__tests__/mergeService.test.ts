@@ -6,8 +6,6 @@ import { MergeService } from "../services/mergeService";
 import {
   MockCompanyService,
   MockCompanyRepository,
-  MockUserRepository,
-  MockBranchRepository,
   MockDB,
 } from "./mocks/index";
 
@@ -15,8 +13,6 @@ describe('MergeService', () => {
   let mockMergeService: MergeService;
   let mockCompanyService: MockCompanyService;
   let mockCompanyRepo: MockCompanyRepository;
-  let mockUserRepo: MockUserRepository;
-  let mockBranchRepo: MockBranchRepository;
   let mockDb: MockDB;
 
   beforeEach(() => {
@@ -24,8 +20,6 @@ describe('MergeService', () => {
     const container = getTestContainer();
     mockCompanyService = container.get<MockCompanyService>(TYPES.ICompanyService);
     mockCompanyRepo = container.get<MockCompanyRepository>(TYPES.ICompanyRepository);
-    mockUserRepo = container.get<MockUserRepository>(TYPES.IUserRepository);
-    mockBranchRepo = container.get<MockBranchRepository>(TYPES.IBranchRepository);
     mockDb = container.get<MockDB>(TYPES.Database);
     mockMergeService = container.get<MergeService>(TYPES.IMergeService);
   });
